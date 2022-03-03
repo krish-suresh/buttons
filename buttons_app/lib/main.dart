@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+// import 'firebase_options.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {
-  runApp(const MyApp());
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -25,10 +32,64 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
-            children: [StatusBox()],
-          )
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              StatusBox(
+                color: Colors.green,
+                text: "Open",
+              ),
+              StatusBox(
+                color: Colors.red,
+                text: "Busy",
+              ),
+              StatusBox(
+                color: Colors.orange,
+                text: "Waiting",
+              )
+            ],
+          ),
+          // StreamBuilder(
+          //     stream: FirebaseFirestore.instance
+          //         .collection('machines')
+          //         .doc('DUQrTjlWeTT2DAdupQzp')
+          //         .snapshots(),
+          //     builder: (BuildContext context,
+          //         AsyncSnapshot<DocumentSnapshot> snapshot) {
+          //       if (snapshot.hasError) {
+          //         return Text('Something went wrong');
+          //       }
+
+          //       if (snapshot.connectionState == ConnectionState.waiting) {
+          //         return Scaffold(
+          //           body: Center(child: CircularProgressIndicator()),
+          //         );
+          //       }
+          //       Map<String, dynamic> data =
+          //           snapshot.data!.data() as Map<String, dynamic>;
+          //       return Column(
+          //         mainAxisAlignment: MainAxisAlignment.center,
+          //         children: [
+          //           DefaultTextStyle(
+          //             style: TextStyle(color: Colors.black, fontSize: 12),
+          //             child: Text(data['room'] +
+          //                 " " +
+          //                 data['machine_type'] +
+          //                 " " +
+          //                 data['machine_id'].toString()),
+          //           ),
+          //           StatusBox(
+          //             color: data['status'] == "open"
+          //                 ? Colors.green
+          //                 : (data['status'] == "busy"
+          //                     ? Colors.red
+          //                     : Colors.orange),
+          //           ),
+          //         ],
+          //       );
+          //     })
         ],
       ),
     );
@@ -36,11 +97,12 @@ class MyApp extends StatelessWidget {
 }
 
 class StatusBox extends StatelessWidget {
-  const StatusBox({Key? key, this.color = const Colors.red})
+  const StatusBox({Key? key, this.color = Colors.red, this.text = ""})
       : super(
           key: key,
         );
-
+  final Color color;
+  final String text;
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
@@ -51,13 +113,21 @@ class StatusBox extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(32.0),
         child: Container(
-          width: 40.0,
-          height: 40.0,
+          width: 50.0,
+          height: 50.0,
           child: Container(
             decoration: new BoxDecoration(
               color: color,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            ),
+            child: Center(
+              child: DefaultTextStyle(
+                style: TextStyle(color: Colors.white, fontSize: 12),
+                child: Text(
+                  text,
+                ),
+              ),
             ),
           ),
         ),
