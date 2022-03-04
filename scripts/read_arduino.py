@@ -1,4 +1,3 @@
-from turtle import update
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -10,9 +9,9 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 doc_ref = db.collection(u'machines').document(u'DUQrTjlWeTT2DAdupQzp')
-doc_ref.set({
-    u'status': u'waiting',
-},merge=True)
+# doc_ref.set({
+#     u'status': u'waiting',
+# },merge=True)
 
 ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
 prev = None
