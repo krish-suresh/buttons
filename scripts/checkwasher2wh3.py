@@ -28,7 +28,7 @@ while True:
     timestamp = dt.now().strftime("%A, %H:%M:%S")
     api_response = res_data.json()['objects'][2]['time_left_lite']
     new_data = {"time":timestamp,"available": api_response}
-    if prev["available"] == 'Available' and new_data["available"] != 'Available':
+    if new_data["available"] != 'Available':
         print(new_data)
         doc_ref.set({
             u'status': u'busy',
