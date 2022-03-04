@@ -35,12 +35,13 @@ class MyApp extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           DefaultTextStyle(
-            style: TextStyle(color: Colors.black, fontSize: 30),
-            child: Text("Better Laundry View"),
+            style: TextStyle(
+                color: Colors.black, fontSize: 45, fontWeight: FontWeight.w200),
+            child: Text("Slightly Better Laundry View"),
           ),
           DefaultTextStyle(
             style: TextStyle(
-                color: Colors.black, fontSize: 15, fontWeight: FontWeight.w300),
+                color: Colors.black, fontSize: 20, fontWeight: FontWeight.w100),
             child: Text("Status Options"),
           ),
           Row(
@@ -57,6 +58,25 @@ class MyApp extends StatelessWidget {
               StatusBox(
                 color: Colors.orange,
                 text: "Waiting",
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              DefaultTextStyle(
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500),
+                child: Text("Live Data"),
+              ),
+              Container(
+                width: 10.0,
+                height: 10.0,
+                margin: EdgeInsets.all(3),
+                decoration:
+                    BoxDecoration(color: Colors.red, shape: BoxShape.circle),
               )
             ],
           ),
@@ -78,19 +98,20 @@ class MyApp extends StatelessWidget {
                 }
                 Map<String, dynamic> data =
                     snapshot.data!.data() as Map<String, dynamic>;
-                return Column(
+                return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     DefaultTextStyle(
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w300),
+                          fontSize: 25,
+                          fontWeight: FontWeight.w200),
                       child: Text(data['room'] +
                           " " +
                           data['machine_type'] +
                           " " +
-                          data['machine_id'].toString()),
+                          data['machine_id'].toString() +
+                          ":"),
                     ),
                     StatusBox(
                       color: data['status'] == "open"
@@ -123,7 +144,7 @@ class StatusBox extends StatelessWidget {
         border: Border.all(width: 5.0, color: Colors.white),
       ),
       child: Padding(
-        padding: EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(15.0),
         child: Container(
           width: 50.0,
           height: 50.0,

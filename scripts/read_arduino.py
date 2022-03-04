@@ -11,7 +11,7 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 doc_ref = db.collection(u'machines').document(u'DUQrTjlWeTT2DAdupQzp')
 doc_ref.set({
-    u'status': u'busy',
+    u'status': u'waiting',
 },merge=True)
 
 ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
@@ -29,7 +29,8 @@ while True:
     if prev == 0 and read == 1:
         print("update")
         doc_ref = db.collection(u'machines').document(u'DUQrTjlWeTT2DAdupQzp')
-        doc_ref.set({
-            u'status': u'open',
-        },merge=True)
+        if doc_ref.get().to_dict()['status'] == "waiting":
+            doc_ref.set({
+                u'status': u'open',
+            },merge=True)
     prev = read
