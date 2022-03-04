@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -34,6 +34,15 @@ class MyApp extends StatelessWidget {
       home: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          DefaultTextStyle(
+            style: TextStyle(color: Colors.black, fontSize: 30),
+            child: Text("Better Laundry View"),
+          ),
+          DefaultTextStyle(
+            style: TextStyle(
+                color: Colors.black, fontSize: 15, fontWeight: FontWeight.w300),
+            child: Text("Status Options"),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -51,45 +60,48 @@ class MyApp extends StatelessWidget {
               )
             ],
           ),
-          // StreamBuilder(
-          //     stream: FirebaseFirestore.instance
-          //         .collection('machines')
-          //         .doc('DUQrTjlWeTT2DAdupQzp')
-          //         .snapshots(),
-          //     builder: (BuildContext context,
-          //         AsyncSnapshot<DocumentSnapshot> snapshot) {
-          //       if (snapshot.hasError) {
-          //         return Text('Something went wrong');
-          //       }
+          StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('machines')
+                  .doc('DUQrTjlWeTT2DAdupQzp')
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Something went wrong');
+                }
 
-          //       if (snapshot.connectionState == ConnectionState.waiting) {
-          //         return Scaffold(
-          //           body: Center(child: CircularProgressIndicator()),
-          //         );
-          //       }
-          //       Map<String, dynamic> data =
-          //           snapshot.data!.data() as Map<String, dynamic>;
-          //       return Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           DefaultTextStyle(
-          //             style: TextStyle(color: Colors.black, fontSize: 12),
-          //             child: Text(data['room'] +
-          //                 " " +
-          //                 data['machine_type'] +
-          //                 " " +
-          //                 data['machine_id'].toString()),
-          //           ),
-          //           StatusBox(
-          //             color: data['status'] == "open"
-          //                 ? Colors.green
-          //                 : (data['status'] == "busy"
-          //                     ? Colors.red
-          //                     : Colors.orange),
-          //           ),
-          //         ],
-          //       );
-          //     })
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Scaffold(
+                    body: Center(child: CircularProgressIndicator()),
+                  );
+                }
+                Map<String, dynamic> data =
+                    snapshot.data!.data() as Map<String, dynamic>;
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DefaultTextStyle(
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w300),
+                      child: Text(data['room'] +
+                          " " +
+                          data['machine_type'] +
+                          " " +
+                          data['machine_id'].toString()),
+                    ),
+                    StatusBox(
+                      color: data['status'] == "open"
+                          ? Colors.green
+                          : (data['status'] == "busy"
+                              ? Colors.red
+                              : Colors.orange),
+                    ),
+                  ],
+                );
+              })
         ],
       ),
     );
