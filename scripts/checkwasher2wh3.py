@@ -35,7 +35,7 @@ while True:
         },merge=True)
         db.collection(u'logs').add({
             u'source' : u'laundry_view',
-            u'data':u'status changed to busy',
+            u'data':u'status changed',
             u'timestamp': firestore.SERVER_TIMESTAMP,
             u'prev_machine_status': u'available',
             u'current_machine_status': u'busy'
@@ -47,7 +47,7 @@ while True:
         },merge=True)
         db.collection(u'logs').add({
             u'source' : u'laundry_view',
-            u'data':u'status changed to waiting',
+            u'data':u'status changed',
             u'timestamp': firestore.SERVER_TIMESTAMP,
             u'prev_machine_status': u'busy',
             u'current_machine_status': u'waiting'

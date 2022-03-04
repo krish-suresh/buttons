@@ -20,7 +20,7 @@ while True:
         read = int(ser.readline().strip())
     except ValueError:
         continue
-    print(f"p: {prev} r:{read}")
+    # print(f"p: {prev} r:{read}")
     if read != 0 and read != 1:
         print("invalid")
         prev = read
