@@ -28,8 +28,15 @@ while True:
     if prev == 0 and read == 1:
         print("update")
         doc_ref = db.collection(u'machines').document(u'DUQrTjlWeTT2DAdupQzp')
+        db.collection(u'logs').add({
+            u'source' : u'button',
+            u'data':u'pressed',
+            u'timestamp': firestore.SERVER_TIMESTAMP,
+            u'current_machine_status': doc_ref.get().to_dict()['status']
+        })
         if doc_ref.get().to_dict()['status'] == "waiting":
             doc_ref.set({
                 u'status': u'open',
             },merge=True)
+
     prev = read

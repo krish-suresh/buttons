@@ -33,10 +33,24 @@ while True:
         doc_ref.set({
             u'status': u'busy',
         },merge=True)
+        db.collection(u'logs').add({
+            u'source' : u'laundry_view',
+            u'data':u'status changed to busy',
+            u'timestamp': firestore.SERVER_TIMESTAMP,
+            u'prev_machine_status': u'available',
+            u'current_machine_status': u'busy'
+        })
     elif prev["available"] != 'Available' and new_data["available"] == 'Available':
         print(new_data)
         doc_ref.set({
             u'status': u'waiting',
         },merge=True)
+        db.collection(u'logs').add({
+            u'source' : u'laundry_view',
+            u'data':u'status changed to waiting',
+            u'timestamp': firestore.SERVER_TIMESTAMP,
+            u'prev_machine_status': u'busy',
+            u'current_machine_status': u'waiting'
+        })
     prev = new_data
     sleep(30)
