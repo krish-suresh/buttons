@@ -6,6 +6,8 @@ import requests
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import requests
+
 # 3rd floor
 query = {'school_desc_key': 2, 'location':296972, 'rdm': 1646322013176}
 res_data = requests.get("https://www.laundryview.com/api/currentRoomData", params=query)
@@ -22,6 +24,7 @@ doc_ref = db.collection(u'machines').document(u'DUQrTjlWeTT2DAdupQzp')
 
 # define headers of csv 
 headers = ["time", "available"]
+
 prev = {"time":None,"available": res_data.json()['objects'][2]['time_left_lite']}
 while True: 
     res_data = requests.get("https://www.laundryview.com/api/currentRoomData", params=query)
